@@ -82,7 +82,7 @@ If _concourse web_ is firewalled or run behind a proxy the external visible URL
 can be configured by setting the `CONCOURSE_URL` environment variable.
 
 ```bash
-docker run --entrypoint concourse-web.sh \
+docker run --entrypoint run-web.sh \
   --env CONCOURSE_URL=http://192.168.99.100:8080 \
   meteogroup/concourse-ci
 ```
@@ -91,7 +91,7 @@ The default login is `concourse` with password `ci` . This can be changed by
 setting the `CONCOURSE_LOGIN` and `CONCOURSE_PASSWORD` environment variables.
 
 ```bash
-docker run --entrypoint concourse-web.sh \
+docker run --entrypoint run-web.sh \
   --env CONCOURSE_LOGIN=ci-user \
   --env CONCOURSE_PASSWORD=rumpelstiltskin \
   meteogroup/concourse-ci
@@ -105,7 +105,7 @@ environment variables, along with one or more of the
 container to ignore the `CONCOURSE_LOGIN` and `CONCOURSE_PASSWORD` variables.
 
 ```bash
-docker run --entrypoint concourse-web.sh \
+docker run --entrypoint run-web.sh \
   --env CONCOURSE_GITHUB_AUTH_CLIENT_ID=b9c1a7f3895bd045b945 \
   --env CONCOURSE_GITHUB_AUTH_CLIENT_SECRET=1d9c379fcdfa6e1010293ed955274da27c3904c2 \
   --env CONCOURSE_GITHUB_AUTH_ORGANIZATION=my-org \
@@ -117,7 +117,7 @@ set the `CONCOURSE_PUBLICLY_VIEWABLE` environment variable. This is convenient
 for open source projects.
 
 ```bash
-docker run --entrypoint concourse-web.sh \
+docker run --entrypoint run-web.sh \
   --env CONCOURSE_PUBLICLY_VIEWABLE=true \
   meteogroup/concourse-ci
 ```
@@ -127,7 +127,7 @@ container is removed). To use an external postgres database set the
 `CONCOURSE_DATA_SOURCE` environment variable.
 
 ```bash
-docker run --entrypoint concourse-web.sh \
+docker run --entrypoint run-web.sh \
   --env CONCOURSE_DATA_SOURCE=postgres://pg-user:pg-password@192.168.99.100 \
   meteogroup/concourse-ci
 ```
@@ -138,7 +138,7 @@ docker run --entrypoint concourse-web.sh \
 To run a worker use
 
 ```bash
-docker run --entrypoint concourse-worker.sh --privileged \
+docker run --entrypoint run-worker.sh --privileged \
   meteogroup/concourse-ci
 ```
 
@@ -157,7 +157,7 @@ The TSA host and port can be configured by setting the `CONCOURSE_TSA_HOST` and
 register at `0.0.0.0:2222`.
 
 ```bash
-docker run --entrypoint concourse-worker.sh \
+docker run --entrypoint run-worker.sh \
   --privileged --v /var/lib/concourse/work \
   --env CONCOURSE_TSA_HOST=192.168.99.100 \
   --env CONCOURSE_TSA_PORT=2222 \
@@ -177,7 +177,7 @@ exists). After keys are setup `/var/lib/concourse/keys` will be unmounted from
 the container to protect private keys.
 
 ```bash
-docker run --entrypoint concourse-worker.sh \
+docker run --entrypoint run-worker.sh \
   --privileged --v /var/lib/concourse/work \
   -v /path/to/dir/containing/keys:/var/lib/concourse/keys \
   meteogroup/concourse-ci
@@ -190,7 +190,7 @@ The public TSA host key can be passed in the `CONCOURSE_TSA_PUBKEY` environment
 variable. In that case `/var/lib/concourse/keys/tsa_key.pub` is ignored.
 
 ```bash
-docker run --entrypoint concourse-worker.sh \
+docker run --entrypoint run-worker.sh \
   --privileged --v /var/lib/concourse/work \
   --env CONCOURSE_WORKER_KEY="<worker's private key>" \
   --env CONCOURSE_TSA_PUBKEY="<public TSA key>" \
